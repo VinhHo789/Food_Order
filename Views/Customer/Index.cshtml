@@ -1,0 +1,41 @@
+﻿<!-- Index.cshtml -->
+@model IEnumerable<Lab05.ViewModel.CustomerViewModel>
+
+
+
+<h2>Danh sách khách hàng</h2>
+
+<select id="customerDropdown" onchange="loadCustomerOrders()">
+    <option value="">Chọn khách hàng</option>
+    @foreach (var customer in Model)
+    {
+        <option value="@customer.MaKH">@customer.TenKH</option>
+    }
+</select>
+
+<div id="customerDetailsContainer">
+    <!-- Customer details will be loaded here -->
+</div>
+
+@section scripts {
+    <script>
+        function loadCustomerOrders() {
+            var customerId = $("#customerDropdown").val();
+            if (customerId !== "") {
+                $.ajax({
+                    url: "/Customer/GetCustomerOrders/" + customerId,
+                    method: "GET",
+                    success: function (data) {
+                        $("#customerDetailsContainer").html(data);
+                    },
+                    error: function () {
+                        alert("Đã xảy ra lỗi khi lấy dữ liệu đơn hàng của khách hàng.");
+                    }
+                });
+            } else {
+                
+            }
+        }
+    </script>
+}
+

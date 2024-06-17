@@ -1,0 +1,61 @@
+﻿@model List<Lab05.ViewModel.OrderViewModel>
+@{
+    var UserName = ViewBag.Username;
+}
+
+<h2>Welcome, @UserName!</h2>
+<h2>Order Food</h2>
+<form asp-action="Order" method="post">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div style="margin-left: 20px; margin-right: 20px; border: 1px solid black; padding: 10px;">
+            <input type="hidden" asp-for="@Model[i].MAMA" />
+            <h4>@Model[i].TENMA - @Model[i].DONGGIA VND</h4>
+            <label>Số lượng:</label>
+            <input type="number" asp-for="@Model[i].SL" min="0" data-price="@Model[i].DONGGIA" class="quantity-input" />
+
+            <label>Topping:</label>
+            <input type="text" asp-for="@Model[i].LOAIMA" />
+
+            <label>Mon ăn kèm:</label>
+            <input type="text" asp-for="@Model[i].MAK" />
+
+            <!-- Add other input fields as needed -->
+
+            <label>Note:</label>
+            <textarea asp-for="@Model[i].NOTE"></textarea>
+
+            <p class="item-total">Tổng: <span class="item-total-amount">0</span> VND</p>
+        </div>
+    }
+
+    <p>Thành tiền: <span id="total-money">0</span> VND</p>
+    <button type="submit">Đặt</button>
+</form>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".quantity-input").on("input", function () {
+                // Update individual item total
+                var quantity = $(this).val();
+                var price = $(this).data("price");
+                var itemTotal = quantity * price;
+                $(this).closest("div").find(".item-total-amount").text(itemTotal.toFixed(2)); // toFixed to display decimal places
+
+                // Update total money
+                updateTotalMoney();
+            });
+
+            function updateTotalMoney() {
+                var totalMoney = 0;
+                $(".item-total-amount").each(function () {
+                    totalMoney += parseFloat($(this).text());
+                });
+
+                // Display the overall total money
+                $("#total-money").text(totalMoney.toFixed(2)); // toFixed to display decimal places
+            }
+        });
+    </script>
+}

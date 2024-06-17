@@ -1,0 +1,54 @@
+﻿
+@model Lab05.Models.Account
+
+<h2>Sign Up</h2>
+
+<form asp-action="Index" method="post">
+    <!-- Account fields -->
+    <div class="form-group">
+        <label asp-for="Username">Username</label>
+        <input asp-for="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <!-- Khachhang fields -->
+    <div class="form-group">
+        <label asp-for="MakhNavigation.Ho">Họ:</label>
+        <input asp-for="MakhNavigation.Ho" class="form-control" />
+        <span asp-validation-for="MakhNavigation.Ho" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MakhNavigation.Ten">Tên:</label>
+        <input asp-for="MakhNavigation.Ten" class="form-control" />
+        <span asp-validation-for="MakhNavigation.Ten" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MakhNavigation.Ngaysinh">Ngày sinh: </label>
+        <input asp-for="MakhNavigation.Ngaysinh" type="date" class="form-control" />
+        <span asp-validation-for="MakhNavigation.Ngaysinh" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MakhNavigation.Diachi">Địa chỉ</label>
+        <input asp-for="MakhNavigation.Diachi" class="form-control" />
+        <span asp-validation-for="MakhNavigation.Diachi" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MakhNavigation.Sdt">Số điện thoại</label>
+        <input asp-for="MakhNavigation.Sdt" class="form-control" />
+        <span asp-validation-for="MakhNavigation.Sdt" class="text-danger"></span>
+    </div>
+
+    <!-- Add other Khachhang fields as needed -->
+
+    <button type="submit" class="btn btn-primary">Đăng ký</button>
+</form>

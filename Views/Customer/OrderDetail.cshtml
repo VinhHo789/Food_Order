@@ -1,0 +1,37 @@
+﻿<!-- _OrderDetails.cshtml -->
+@model List<Lab05.ViewModel.OrderDetailsViewModel>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên món ăn</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderDetail in Model)
+        {
+            <tr>
+                <td>@orderDetail.STT</td>
+                <td>@orderDetail.TenMa</td>
+                <td>@orderDetail.SL</td>
+                <td>@orderDetail.Donggia</td>
+                <td>@orderDetail.ThanhTien</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="5" class="text-left"><strong>Ghi chú:</strong></td>
+        </tr>
+        <tr>
+
+            <td colspan="4" class="text-right"><strong>Thành tiền:</strong></td>
+            <td><strong>@Model.Sum(o => o.ThanhTien)</strong></td>
+        </tr>
+        
+    </tbody>
+</table>
+

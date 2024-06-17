@@ -1,0 +1,120 @@
+﻿<!-- _CustomerDetails.cshtml -->
+@model Lab05.ViewModel.CustomerViewModel
+<div id="main" style="margin-left: 20px; margin-right: 20px; border: 1px solid black; padding: 10px;">
+
+
+<h3>Thông tin khách hàng</h3>
+<p>Mã khách hàng: @Model.MaKH</p>
+<p>Tên khách hàng: @Model.TenKH</p>
+
+<table id="ordersTable" class="table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Mã Hóa đơn</th>
+            <th>Ngày lập Hóa đơn</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.DanhSachDonHang)
+        {
+            <tr>
+                <td>@order.STT</td>
+                <td>
+                    <a href="#" onclick="showOrderDetails('@order.MaHD')">@order.MaHD</a>
+                </td>
+                <td>@order.NgayHD</td>
+                <td>
+                    <button class="btn btn-danger" onclick="deleteOrder('@order.MaHD')">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+    <div style="margin-left: 40px; margin-right: 40px; border: 1px solid black; padding: 10px;">
+        <div id="customerDetailsContainer123"></div>
+
+        <div id="orderDetailsContainer"></div>
+</div>
+
+</div>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px; /* Add padding for better visual */
+    }
+
+    th {
+        background-color: #f2f2f2; /* Optional: Add background color for header */
+    }
+
+    td {
+        text-align: left; /* Optional: Align cell content */
+    }
+
+
+
+    /* Separate border for the last row */
+
+</style>
+
+
+
+
+
+
+
+<script>
+    function showOrderDetails(maHD) {
+        $.ajax({
+            url: '/Customer/GetCustomerDetails/' + maHD,
+            method: 'GET',
+            success: function (data1) {
+                // Display order details
+
+                $('#customerDetailsContainer123').html(data1);
+            },
+            error: function () {
+                alert('Error retrieving order details.');
+            }
+        });
+
+        $.ajax({
+            url: '/Customer/GetOrderDetails/' + maHD,
+            method: 'GET',
+            success: function (data) {
+                // Display order details
+                $('#orderDetailsContainer').html(data);
+            },
+            error: function () {
+                alert('Error retrieving order details.');
+            }
+        });
+
+        
+    }
+    function deleteOrder(maHD) {
+        if (confirm("Are you sure you want to delete this order?")) {
+            $.ajax({
+                url: '/Customer/DeleteOrder/' + maHD,
+                type: 'POST',
+                success: function () {
+                    // Update the UI (remove the row)
+                    var row = $('td:contains("' + maHD + '")').closest('tr');
+                    row.remove();
+                },
+                error: function () {
+                    alert('Error deleting order.');
+                }
+            });
+        }
+    }
+</script>
